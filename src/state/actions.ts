@@ -5,6 +5,7 @@ export enum ActionType {
   UpdateUser,
   UpdateStatus,
   ErrorHandler,
+  UpdateState,
 }
 
 export interface ErrorHandler {
@@ -22,4 +23,5 @@ export interface UpdateStatus {
   payload: Status;
 }
 
-export type StateActions = UpdateUser | UpdateStatus | ErrorHandler;
+export type AuthActions = UpdateUser | UpdateStatus | ErrorHandler;
+export type FirestoreActions = UpdateStatus | ErrorHandler;

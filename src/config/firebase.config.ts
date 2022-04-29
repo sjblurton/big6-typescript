@@ -2,7 +2,6 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import {
   getAuth,
-  updateProfile,
   onAuthStateChanged,
   signOut,
   GoogleAuthProvider,
@@ -26,4 +25,4 @@ const auth = getAuth();
 const provider = new GoogleAuthProvider();
 const googleLogin = () => signInWithPopup(auth, provider);
 
-export { auth, db, googleLogin, updateProfile, onAuthStateChanged, signOut };
+export { auth, db, googleLogin, onAuthStateChanged, signOut };

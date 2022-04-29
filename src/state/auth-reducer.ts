@@ -1,10 +1,7 @@
-import { ActionType, StateActions } from "./auth-actions";
+import { ActionType, AuthActions } from "./actions";
 import { AuthState } from "./auth-state";
 
-export function stateReducer(
-  state: AuthState,
-  action: StateActions
-): AuthState {
+export function authReducer(state: AuthState, action: AuthActions): AuthState {
   switch (action.type) {
     case ActionType.UpdateUser:
       return { ...state, user: action.payload };
