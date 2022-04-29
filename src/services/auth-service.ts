@@ -1,24 +1,60 @@
-import { signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth";
-import { auth } from "../config/firebase.config";
+import {
+  inMemoryPersistence,
+  setPersistence,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+import { Dispatch } from "react";
+import { auth, provider } from "../config/firebase.config";
+import { ActionType, StateActions } from "../state/actions";
+import { Status } from "../state/state";
 
 export const AuthService = {
-  loginWithGoogle: async () => {
-    const provider = new GoogleAuthProvider();
+  googleHandler: async (dispatch: Dispatch<StateActions>) => {
+    dispatch({ type: ActionType.UpdateStatus, payload: Status.loading });
+    provider.setCustomParameters({ prompt: "select_account" });
     try {
+      await setPersistence(auth, inMemoryPersistence);
       const result = await signInWithPopup(auth, provider);
-      return { user: result.user };
-    } catch (e: any) {
-      console.log(e);
-      return { error: e.message as string };
+      const user = result.user;
+
+      dispatch({
+        type: ActionType.UpdateStatus,
+        payload: Status.success,
+      });
+      dispatch({ type: ActionType.UpdateUser, payload: user });
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.UpdateStatus,
+        payload: Status.error,
+      });
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      dispatch({
+        type: ActionType.ErrorHandle,
+        payload: { code: errorCode, message: errorMessage },
+      });
     }
   },
-  logout: async () => {
+  logout: async (dispatch: Dispatch<StateActions>) => {
     try {
+      dispatch({ type: ActionType.UpdateStatus, payload: Status.loading });
       await signOut(auth);
-    } catch (e: any) {
-      console.log(e);
-
-      return { error: e.message as string };
+      dispatch({
+        type: ActionType.UpdateStatus,
+        payload: Status.success,
+      });
+    } catch (error: any) {
+      dispatch({
+        type: ActionType.UpdateStatus,
+        payload: Status.error,
+      });
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      dispatch({
+        type: ActionType.ErrorHandle,
+        payload: { code: errorCode, message: errorMessage },
+      });
     }
   },
 };

@@ -1,12 +1,12 @@
 import type { AppProps } from "next/app";
-import { AuthProvider } from "../hooks/useAuth";
+import { StateProvider } from "../state/context";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <AuthProvider>
+      <StateProvider>
         <Component {...pageProps} />
-      </AuthProvider>
+      </StateProvider>
     </>
   );
 }
