@@ -7,7 +7,6 @@ export function stateReducer(
 ): AuthState {
   switch (action.type) {
     case ActionType.UpdateUser:
-      console.log(action.payload);
       return { ...state, user: action.payload };
 
     case ActionType.UpdateStatus:

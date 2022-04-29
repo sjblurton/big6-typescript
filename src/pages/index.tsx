@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { useContext } from "react";
-import { googleLogin } from "../config/firebase.config";
+import { auth, googleLogin, signOut } from "../config/firebase.config";
 import { useAuth } from "../hooks/use-auth";
 import { ActionType } from "../state/auth-actions";
 import { AuthContext } from "../state/auth-context";
@@ -42,7 +42,12 @@ const Home: NextPage = () => {
             error: {state.error?.message + " " + state.error?.code ?? "none"}
           </h2>
         }
-        <button onClick={handleClick}>login with google</button>
+        <button disabled={state.user !== null} onClick={handleClick}>
+          login with google
+        </button>
+        <button disabled={state.user === null} onClick={() => signOut(auth)}>
+          logout
+        </button>
       </main>
       <footer></footer>
     </div>

@@ -10,5 +10,5 @@ export const useAuth = () => {
       dispatch({ type: ActionType.UpdateUser, payload: user })
     );
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
 };
