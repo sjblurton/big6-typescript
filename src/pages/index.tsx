@@ -3,14 +3,12 @@ import Head from "next/head";
 import { useContext } from "react";
 import { auth, googleLogin, signOut } from "../config/firebase.config";
 import { useAuth } from "../hooks/use-auth";
-import { useFirestore } from "../hooks/use-firestore";
 import { ActionType } from "../state/actions";
 import { AuthContext } from "../state/auth-context";
 
 const Home: NextPage = () => {
   const { state, dispatch } = useContext(AuthContext);
   useAuth();
-  useFirestore(state.user?.uid ?? "");
 
   const handleClick = async () => {
     dispatch({ type: ActionType.UpdateStatus, payload: "loading" });
