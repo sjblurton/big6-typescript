@@ -1,5 +1,5 @@
+import { AuthState } from "../interfaces";
 import { ActionType, AuthActions } from "./actions";
-import { AuthState } from "./auth-state";
 
 export function authReducer(state: AuthState, action: AuthActions): AuthState {
   switch (action.type) {
@@ -9,7 +9,7 @@ export function authReducer(state: AuthState, action: AuthActions): AuthState {
     case ActionType.UpdateStatus:
       return { ...state, status: action.payload };
 
-    case ActionType.ErrorHandler:
+    case ActionType.AuthErrors:
       return { ...state, error: action.payload };
 
     default:

@@ -1,7 +1,8 @@
 import { createContext, Dispatch, useReducer } from "react";
+import { FirestoreState } from "../interfaces";
 import { FirestoreActions } from "./actions";
 import { firestoreReducer } from "./firestore-reducer";
-import { initialState, FirestoreState } from "./firestore-state";
+import { initialState } from "./firestore-state";
 
 export const FirestoreContext = createContext<{
   state: FirestoreState;

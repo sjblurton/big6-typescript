@@ -2,14 +2,26 @@ import { User } from "firebase/auth";
 import { Timestamp } from "firebase/firestore";
 import { Dispatch, SetStateAction } from "react";
 
-export interface IFirebaseAuthErrors {
+export type Status = "idle" | "loading" | "success" | "error";
+export interface IFirebaseErrors {
   message?: any;
   code?: any;
 }
 
+export interface FirestoreState {
+  status: Status;
+  error: IFirebaseErrors | undefined;
+}
+
+export interface AuthState {
+  status: Status;
+  error: IFirebaseErrors | undefined;
+  user: User | null;
+}
+
 export interface IAuthContext {
   user: User | undefined;
-  error: IFirebaseAuthErrors;
+  error: IFirebaseErrors;
   loginWithGoogle: () => Promise<
     | {
         user: User;

@@ -78,11 +78,13 @@ export const FirestoreService = {
   //     await deleteDoc(doc(db, user, docId));
   //   },
   createUser: async (user: User) => {
-    await setDoc(doc(db, user.uid, "user"), {
-      name: user.displayName,
-      email: user.email,
-      image: user.photoURL,
-      uid: user.uid,
-    });
+    try {
+      await setDoc(doc(db, user.uid, "user"), {
+        name: user.displayName,
+        email: user.email,
+        image: user.photoURL,
+        uid: user.uid,
+      });
+    } catch (error) {}
   },
 };

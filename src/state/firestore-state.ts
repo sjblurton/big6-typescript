@@ -1,14 +1,4 @@
-import { Status } from "./auth-state";
-
-export interface FirestoreState {
-  status: Status;
-  error: IFirebaseAuthErrors | undefined;
-}
-
-export interface IFirebaseAuthErrors {
-  message?: any;
-  code?: any;
-}
+import { FirestoreState } from "../interfaces";
 
 export const initialState: FirestoreState = {
   status: "idle",

@@ -1,16 +1,22 @@
 import { User } from "firebase/auth";
-import { IFirebaseAuthErrors, Status } from "./auth-state";
+import { IFirebaseErrors, Status } from "../interfaces";
 
 export enum ActionType {
   UpdateUser,
   UpdateStatus,
-  ErrorHandler,
+  AuthErrors,
   UpdateState,
+  StateErrors,
 }
 
-export interface ErrorHandler {
-  type: ActionType.ErrorHandler;
-  payload: IFirebaseAuthErrors;
+export interface AuthErrors {
+  type: ActionType.AuthErrors;
+  payload: IFirebaseErrors;
+}
+
+export interface StateErrors {
+  type: ActionType.StateErrors;
+  payload: IFirebaseErrors;
 }
 
 export interface UpdateUser {
@@ -23,5 +29,5 @@ export interface UpdateStatus {
   payload: Status;
 }
 
-export type AuthActions = UpdateUser | UpdateStatus | ErrorHandler;
-export type FirestoreActions = UpdateStatus | ErrorHandler;
+export type AuthActions = UpdateUser | UpdateStatus | AuthErrors;
+export type FirestoreActions = UpdateStatus | StateErrors;

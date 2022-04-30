@@ -15,11 +15,18 @@ export const useFirestore = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
 
   useEffect(() => {
-    enableIndexedDbPersistence(db).catch((err: any) => {
+    try {
+      enableIndexedDbPersistence(db);
+      console.log("Persistence on");
+    } catch (err: any) {
       if (err.code == "failed-precondition") {
         console.error("failed-precondition");
-      } else if (err.code == "unimplemented") console.error("unimplemented");
-    });
+      } else if (err.code == "unimplemented") {
+        console.error("unimplemented");
+      } else {
+        console.error(err);
+      }
+    }
   }, []);
 
   useEffect(() => {
