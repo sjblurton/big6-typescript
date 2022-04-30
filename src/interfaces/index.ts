@@ -60,3 +60,5 @@ export interface IData {
   uid: string;
   workout: IWorkout;
 }
+
+export type IsPage = { isPage: "calender" | "clipboard" | "home" | "watch" };

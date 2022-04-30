@@ -1,23 +1,19 @@
 import {
   collection,
-  enableIndexedDbPersistence,
   limit,
   onSnapshot,
   orderBy,
   query,
   Unsubscribe,
 } from "firebase/firestore";
-import { type } from "os";
 import { useContext, useEffect, useState } from "react";
 import { db } from "../config/firebase.config";
 import { IData } from "../interfaces";
 import { ActionType } from "../state/actions";
 import { FirestoreContext } from "../state/firestore-context";
 import { useLatestData } from "./use-latest-data";
-import { usePersistence } from "./use-persistence";
 
 export const useFirestore = () => {
-  usePersistence()
   const [userId, setUserId] = useState<string | undefined>(undefined);
   const { dispatch } = useContext(FirestoreContext);
   useLatestData();

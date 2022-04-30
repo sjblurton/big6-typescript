@@ -2,18 +2,16 @@ import type { NextPage } from "next";
 import { useContext } from "react";
 import Seo from "../../components/layout/seo/seo";
 import { auth, signOut } from "../../config/firebase.config";
-import { useProtected } from "../../hooks/routes";
 import { useAuth } from "../../hooks/use-auth";
+import { useLoginRedirect } from "../../hooks/use-redirect";
 import { AuthContext } from "../../state/auth-context";
+import { FirestoreContext } from "../../state/firestore-context";
 
 const Dashboard: NextPage = () => {
-  const { state, dispatch } = useContext(AuthContext);
+  const firebaseAuth = useContext(AuthContext);
+  const firestore = useContext(FirestoreContext);
   useAuth();
-  useProtected();
-
-  if (state.status === "loading") {
-    return <h1>Loading...</h1>;
-  }
+  useLoginRedirect();
 
   return (
     <div>
@@ -21,14 +19,26 @@ const Dashboard: NextPage = () => {
 
       <main>
         <h1>online</h1>
-        {<h2>Status: {state.status}</h2>}
-        {<h2>state User: {state.user?.displayName ?? "Logged out"}</h2>}
-        {<h2>auth User: {state.user?.displayName ?? "Logged out"}</h2>}
+        {<h2>Status: {firebaseAuth.state.status}</h2>}
         {
           <h2>
-            error: {state.error?.message + " " + state.error?.code ?? "none"}
+            state User: {firebaseAuth.state.user?.displayName ?? "Logged out"}
           </h2>
         }
+        {
+          <h2>
+            auth User: {firebaseAuth.state.user?.displayName ?? "Logged out"}
+          </h2>
+        }
+        {
+          <h2>
+            error:{" "}
+            {firebaseAuth.state.error?.message +
+              " " +
+              firebaseAuth.state.error?.code ?? "none"}
+          </h2>
+        }
+        <div>first doc: {JSON.stringify(firestore.state.data[0])}</div>
         <button onClick={() => signOut(auth)}>logout</button>
       </main>
       <footer></footer>
