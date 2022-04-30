@@ -1,0 +1,13 @@
+export { default as AddIcon } from "./add";
+export { default as CalendarIcon } from "./calendar";
+export { default as ClipboardIcon } from "./clipboard";
+export { default as DotsMenu } from "./dotsMenu";
+export { default as HomeIcon } from "./home";
+export { default as WatchIcon } from "./watch";
+export { default as ArrowLeftIcon } from "./arrowLeft";
+export { default as ArrowRightIcon } from "./arrowRight";
+export { default as InfoIcon } from "./infoIcon";
+export { default as EastIcon } from "./east";
+export { default as WestIcon } from "./west";
+export { default as TrashIcon } from "./trash";
+export { default as EditIcon } from "./edit";

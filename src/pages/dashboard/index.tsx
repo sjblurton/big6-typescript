@@ -1,15 +1,15 @@
 import type { NextPage } from "next";
 import { useContext } from "react";
-import Seo from "../components/layout/seo/seo";
-import { usePublic } from "../hooks/routes";
-import { useAuth } from "../hooks/use-auth";
-import { AuthService } from "../services/auth";
-import { AuthContext } from "../state/auth-context";
+import Seo from "../../components/layout/seo/seo";
+import { auth, signOut } from "../../config/firebase.config";
+import { useProtected } from "../../hooks/routes";
+import { useAuth } from "../../hooks/use-auth";
+import { AuthContext } from "../../state/auth-context";
 
-const Home: NextPage = () => {
+const Dashboard: NextPage = () => {
   const { state, dispatch } = useContext(AuthContext);
   useAuth();
-  usePublic();
+  useProtected();
 
   if (state.status === "loading") {
     return <h1>Loading...</h1>;
@@ -17,7 +17,7 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <Seo title="Home" />
+      <Seo title="Dashboard" />
 
       <main>
         <h1>online</h1>
@@ -29,13 +29,11 @@ const Home: NextPage = () => {
             error: {state.error?.message + " " + state.error?.code ?? "none"}
           </h2>
         }
-        <button onClick={() => AuthService.handleGoogle(dispatch)}>
-          login with google
-        </button>
+        <button onClick={() => signOut(auth)}>logout</button>
       </main>
       <footer></footer>
     </div>
   );
 };
 
-export default Home;
+export default Dashboard;
