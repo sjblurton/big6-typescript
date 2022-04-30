@@ -11,6 +11,8 @@ export interface IFirebaseErrors {
 export interface FirestoreState {
   status: Status;
   error: IFirebaseErrors | undefined;
+  data: IData[] | [];
+  latest: IData[] | [];
 }
 
 export interface AuthState {

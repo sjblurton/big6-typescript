@@ -1,20 +1,14 @@
-/** @type {import('next').NextConfig} */
 const withPWA = require("next-pwa");
 
-const nextConfig = {
-  reactStrictMode: true,
-};
-
-const settings = {
-  env: {},
-  devIndicators: {
-    autoPrerender: false,
-  },
+module.exports = withPWA({
   pwa: {
     dest: "public",
+    disable: process.env.NODE_ENV === "development",
   },
-  nextConfig,
-};
-
-module.exports =
-  process.env.NODE_ENV === "development" ? settings : withPWA(settings);
+  reactStrictMode: true,
+  future: { webpack5: true },
+  images: {
+    loader: "imgix",
+    path: "https://example.com/myaccount/",
+  },
+});

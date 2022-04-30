@@ -1,5 +1,5 @@
+import { FirestoreState } from "../interfaces";
 import { ActionType, FirestoreActions } from "./actions";
-import { FirestoreState } from "./firestore-state";
 
 export function firestoreReducer(
   state: FirestoreState,
@@ -9,8 +9,14 @@ export function firestoreReducer(
     case ActionType.UpdateStatus:
       return { ...state, status: action.payload };
 
-    case ActionType.ErrorHandler:
+    case ActionType.StateErrors:
       return { ...state, error: action.payload };
+
+    case ActionType.UpdateStateData:
+      return { ...state, data: action.payload };
+
+    case ActionType.LatestState:
+      return { ...state, latest: action.payload };
 
     default:
       return state;

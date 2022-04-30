@@ -1536,6 +1536,11 @@
   resolved "https://registry.yarnpkg.com/@rushstack/eslint-patch/-/eslint-patch-1.0.8.tgz#be3e914e84eacf16dbebd311c0d0b44aa1174c64"
   integrity sha512-ZK5v4bJwgXldAUA8r3q9YKfCwOqoHTK/ZqRjSeRXQrBXWouoPnS4MQtgC4AXGiiBuUu5wxrRgTlv0ktmM4P1Aw==
 
+"@sjblurton/use-array@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@sjblurton/use-array/-/use-array-1.1.2.tgz#bbf96b004e5ebef8814b412d6b56acb9ecf1dd3d"
+  integrity sha512-y6qww86+q4q4aDbNKYFVPp2qr/ac4ZeP6DZT2T58rTkHg7/ylPcEXZF1sMcQmb25vKn2/YllRLzAQGeIqZG4Dw==
+
 "@surma/rollup-plugin-off-main-thread@^2.2.3":
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/@surma/rollup-plugin-off-main-thread/-/rollup-plugin-off-main-thread-2.2.3.tgz#ee34985952ca21558ab0d952f00298ad2190c053"

@@ -7,31 +7,25 @@ import {
   query,
   Unsubscribe,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import { type } from "os";
+import { useContext, useEffect, useState } from "react";
 import { db } from "../config/firebase.config";
 import { IData } from "../interfaces";
+import { ActionType } from "../state/actions";
+import { FirestoreContext } from "../state/firestore-context";
+import { useLatestData } from "./use-latest-data";
+import { usePersistence } from "./use-persistence";
 
 export const useFirestore = () => {
+  usePersistence()
   const [userId, setUserId] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    try {
-      enableIndexedDbPersistence(db);
-      console.log("Persistence on");
-    } catch (err: any) {
-      if (err.code == "failed-precondition") {
-        console.error("failed-precondition");
-      } else if (err.code == "unimplemented") {
-        console.error("unimplemented");
-      } else {
-        console.error(err);
-      }
-    }
-  }, []);
+  const { dispatch } = useContext(FirestoreContext);
+  useLatestData();
 
   useEffect(() => {
     let unsubscribe: Unsubscribe;
     const watchData = async () => {
+      dispatch({ type: ActionType.UpdateStatus, payload: "loading" });
       if (userId !== undefined) {
         const q = query(
           collection(db, userId),
@@ -45,11 +39,17 @@ export const useFirestore = () => {
               const item = { docId: doc.id, ...doc.data() } as IData;
               documents.push(item);
             });
-            console.log(documents);
-            return unsubscribe;
+            dispatch({
+              type: ActionType.UpdateStateData,
+              payload: documents,
+            });
+            dispatch({ type: ActionType.UpdateStatus, payload: "success" });
           });
         } catch (error: any) {
-          return { error: { code: error.code, message: error.message } };
+          dispatch({
+            type: ActionType.StateErrors,
+            payload: { code: error.code, message: error.message },
+          });
         }
       }
     };
@@ -59,7 +59,7 @@ export const useFirestore = () => {
     return () => {
       unsubscribe;
     };
-  }, [userId]);
+  }, [userId, dispatch]);
 
   return [setUserId];
 };
