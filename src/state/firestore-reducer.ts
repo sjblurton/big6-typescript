@@ -6,12 +6,6 @@ export function firestoreReducer(
   action: FirestoreActions
 ): FirestoreState {
   switch (action.type) {
-    case ActionType.UpdateStatus:
-      return { ...state, status: action.payload };
-
-    case ActionType.StateErrors:
-      return { ...state, error: action.payload };
-
     case ActionType.UpdateStateData:
       return { ...state, data: action.payload };
 
