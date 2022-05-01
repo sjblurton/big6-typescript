@@ -28,7 +28,6 @@ export const FirestoreService = {
   //       comments: values.comments,
   //       uid: colName,
   //     };
-
   //     const docRef = await addDoc(collection(db, colName), {
   //       ...doc,
   //     });
@@ -77,14 +76,14 @@ export const FirestoreService = {
   //     const db = getFirestore();
   //     await deleteDoc(doc(db, user, docId));
   //   },
-  createUser: async (user: User) => {
-    try {
-      await setDoc(doc(db, user.uid, "user"), {
-        name: user.displayName,
-        email: user.email,
-        image: user.photoURL,
-        uid: user.uid,
-      });
-    } catch (error) {}
-  },
+  // createUser: async (user: User) => {
+  //   try {
+  //     await setDoc(doc(db, user.uid, "user"), {
+  //       name: user.displayName,
+  //       email: user.email,
+  //       image: user.photoURL,
+  //       uid: user.uid,
+  //     });
+  //   } catch (error) {}
+  // },
 };

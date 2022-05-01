@@ -1,14 +1,23 @@
 import type { NextPage } from "next";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useFirestore } from "src/hooks/use-firestore";
 import Seo from "../../components/layout/seo/seo";
 import { AuthContext } from "../../state/auth-context";
 import { FirestoreContext } from "../../state/firestore-context";
 
 const Dashboard: NextPage = () => {
-  const { user, error, loading, auth, signOut } = useContext(AuthContext);
-  const firestore = useContext(FirestoreContext);
+  const { user, loading, auth, signOut } = useContext(AuthContext);
+  const {
+    dispatch,
+    error,
+    loading: firestoreLoading,
+    state,
+  } = useContext(FirestoreContext);
+  const setUserId = useFirestore();
 
-  if (loading) {
+  useEffect(() => setUserId(user?.uid), [user]); //eslint-disable-line
+
+  if (loading || firestoreLoading) {
     return <h1>Loading...</h1>;
   }
   if (error) {
@@ -21,7 +30,7 @@ const Dashboard: NextPage = () => {
       <main>
         <h1>online</h1>
         <h2>state User: {user?.displayName ?? "Logged out"}</h2>
-        <div>first doc: {JSON.stringify(firestore.state.data[0])}</div>
+        <div>first doc: {JSON.stringify(state.data[0])}</div>
         <button onClick={() => signOut(auth)}>logout</button>
       </main>
       <footer></footer>

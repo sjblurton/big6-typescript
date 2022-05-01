@@ -7,6 +7,7 @@ import {
   Unsubscribe,
 } from "firebase/firestore";
 import { useContext, useEffect, useState } from "react";
+import { getErrorMessage } from "src/helpers/error-handler";
 import { db } from "../config/firebase.config";
 import { IData } from "../interfaces";
 import { ActionType } from "../state/actions";
@@ -15,13 +16,13 @@ import { useLatestData } from "./use-latest-data";
 
 export const useFirestore = () => {
   const [userId, setUserId] = useState<string | undefined>(undefined);
-  const { dispatch } = useContext(FirestoreContext);
+  const { dispatch, setLoading, setError } = useContext(FirestoreContext);
   useLatestData();
 
   useEffect(() => {
     let unsubscribe: Unsubscribe;
     const watchData = async () => {
-      dispatch({ type: ActionType.UpdateStatus, payload: "loading" });
+      setLoading(true);
       if (userId !== undefined) {
         const q = query(
           collection(db, userId),
@@ -39,23 +40,20 @@ export const useFirestore = () => {
               type: ActionType.UpdateStateData,
               payload: documents,
             });
-            dispatch({ type: ActionType.UpdateStatus, payload: "success" });
+            setLoading(false);
           });
-        } catch (error: any) {
-          dispatch({
-            type: ActionType.StateErrors,
-            payload: { code: error.code, message: error.message },
-          });
+        } catch (error: unknown) {
+          setError(getErrorMessage(error));
         }
       }
     };
 
-    if (userId !== undefined) watchData().catch(console.error);
+    if (userId !== undefined) watchData();
 
     return () => {
       unsubscribe;
     };
-  }, [userId, dispatch]);
+  }, [userId]); //eslint-disable-line
 
-  return [setUserId];
+  return setUserId;
 };

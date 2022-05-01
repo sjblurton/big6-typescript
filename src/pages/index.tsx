@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import { useContext } from "react";
 import Seo from "../components/layout/seo/seo";
 import { AuthContext } from "../state/auth-context";
