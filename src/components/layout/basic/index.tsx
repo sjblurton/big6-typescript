@@ -1,3 +1,6 @@
+import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "src/state/auth-context";
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
@@ -23,6 +26,14 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const BasicLayout = ({ children }: { children: any }) => {
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user && router.pathname !== "/") router.push("/");
+    if (user && router.pathname === "/") router.push("/dashboard");
+  }, [user]); //eslint-disable-line
+
   return (
     <>
       <GlobalStyle />

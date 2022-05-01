@@ -56,8 +56,7 @@ export const AuthProvider = (props: any) => {
   const login = async () => {
     setLoading(true);
     try {
-      const { user } = await googleLogin();
-      console.log("from use-login: ", user);
+      await googleLogin();
       setLoading(false);
     } catch (firebaseError: unknown) {
       setError(getErrorMessage(firebaseError));

@@ -1,17 +1,16 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { useContext } from "react";
 import Seo from "../components/layout/seo/seo";
 import { AuthContext } from "../state/auth-context";
 
 const Home: NextPage = () => {
-  const { user, loading, error, login } = useContext(AuthContext);
+  const { user, loading, login } = useContext(AuthContext);
 
   if (loading) {
     return <h1>Loading..</h1>;
   }
-  if (error !== undefined) {
-    return <h1>{error}</h1>;
-  }
+
   return (
     <div>
       <Seo title="Home" />
