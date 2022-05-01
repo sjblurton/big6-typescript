@@ -1,8 +1,12 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-function TrashIcon({ setOpenModal }) {
+type Props = {
+  setToggle: Dispatch<SetStateAction<boolean>>;
+};
+
+function TrashIcon({ setToggle }: Props) {
   return (
-    <Container onClick={() => setOpenModal(true)}>
+    <Container onClick={() => setToggle(true)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="24"

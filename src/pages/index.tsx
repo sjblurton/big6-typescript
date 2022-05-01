@@ -1,14 +1,12 @@
 import type { NextPage } from "next";
 import { useContext } from "react";
 import Seo from "../components/layout/seo/seo";
-import { useAlreadyLoggedInRedirect } from "../hooks/use-redirect";
 
 import { AuthService } from "../services/auth";
 import { AuthContext } from "../state/auth-context";
 
 const Home: NextPage = () => {
   const { state, dispatch } = useContext(AuthContext);
-  useAlreadyLoggedInRedirect();
 
   if (state.status === "loading") {
     return <h1>Loading...</h1>;

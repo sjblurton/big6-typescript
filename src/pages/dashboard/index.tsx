@@ -2,16 +2,12 @@ import type { NextPage } from "next";
 import { useContext } from "react";
 import Seo from "../../components/layout/seo/seo";
 import { auth, signOut } from "../../config/firebase.config";
-import { useAuth } from "../../hooks/use-auth";
-import { useLoginRedirect } from "../../hooks/use-redirect";
 import { AuthContext } from "../../state/auth-context";
 import { FirestoreContext } from "../../state/firestore-context";
 
 const Dashboard: NextPage = () => {
   const firebaseAuth = useContext(AuthContext);
   const firestore = useContext(FirestoreContext);
-  useAuth();
-  useLoginRedirect();
 
   return (
     <div>
